@@ -51,7 +51,7 @@ end
 query = <<SPARQL
   SELECT ?ps ?ordinal ?item ?itemLabel ?start_date ?end_date WHERE {
     ?item p:P31 ?ps .
-    ?ps ps:P31 wd:Q15238777 ; pq:P642 wd:Q493517 ; pq:P1545 ?ordinal
+    ?ps ps:P31 wd:Q15238777 ; pq:P13188 wd:Q493517 ; pq:P1545 ?ordinal
     OPTIONAL { ?item wdt:P571 ?start_date }
     OPTIONAL { ?item wdt:P580 ?start_date }
     OPTIONAL { ?item wdt:P576 ?end_date }
@@ -64,7 +64,7 @@ SPARQL
 
 url = WIKIDATA_SPARQL_URL % CGI.escape(query)
 data = Results.new(response: Scraped::Request.new(url: url,
-                                                  headers: { 'User-Agent' => 'welsh-assembly-terms-wikidata morph scraper - curtis [at] loudspeek [dot] cc' }).response).terms
+                                                  headers: { 'User-Agent' => 'welsh-assembly-terms-wikidata morph scraper - loudspeek@poteris.co.uk' }).response).terms
 puts data.map(&:compact).map(&:sort).map(&:to_h) if ENV['MORPH_DEBUG']
 
 ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
